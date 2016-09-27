@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "email": "qweqwe@qwe.qwe",
+    "userRole": "ADMIN",
+    "birthday" : "2016-09-10",
+    "boughtTickets" : [1]
+  },
+  {
+    "id": 2,
+    "email": "asdasd@qwe.qwe",
+    "userRole": "REGISTERED",
+    "birthday" : "2000-01-21"
+  },
+  {
+    "id": 3,
+    "email": "zxczxc@qwe.qwe",
+    "userRole": "REGISTERED",
+    "birthday" : "1990-05-11"
+  }
+]

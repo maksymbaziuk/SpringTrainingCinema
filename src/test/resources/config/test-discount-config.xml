@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="discountService" class="com.baziuk.spring.discount.service.DiscountCinemaService">
+        <property name="strategies">
+            <list>
+                <bean class="com.baziuk.spring.discount.strategy.EachItemDiscountStrategy">
+                    <property name="evaluationStrategy" value="user.birthday.getDayOfYear() ge T(java.time.LocalDate).now().minusDays(5).getDayOfYear() and user.birthday.getDayOfYear() le T(java.time.LocalDate).now().plusDays(5).getDayOfYear()"/>
+                    <property name="action" value="price * 0.05"/>
+                </bean>
+                <bean class="com.baziuk.spring.discount.strategy.NItemDiscountStrategy">
+                    <property name="evaluationStrategy" value="(user.boughtTickets.size() + tickets.size()) % 10  == 0"/>
+                    <property name="action" value="price * 0.5"/>
+                    <property name="discountedTicketNumber" value="10"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+</beans>
