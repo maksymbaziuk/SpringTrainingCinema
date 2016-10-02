@@ -1,5 +1,6 @@
 package com.baziuk.spring.booking.bean;
 
+import com.baziuk.spring.discount.bean.Discount;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
 
@@ -13,6 +14,7 @@ public class Ticket {
     private Show show;
     private double price;
     private int sitNumber;
+    private Discount discount;
 
     public Ticket(){
     }
@@ -31,6 +33,7 @@ public class Ticket {
                 ", show=" + show +
                 ", price=" + price +
                 ", sitNumber=" + sitNumber +
+                ", discount=" + discount +
                 '}';
     }
 
@@ -72,5 +75,13 @@ public class Ticket {
 
     public void setSitNumber(int sitNumber) {
         this.sitNumber = sitNumber;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 }

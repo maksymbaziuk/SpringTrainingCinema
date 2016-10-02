@@ -34,6 +34,7 @@ public class EachItemDiscountStrategy extends DiscountStrategy {
             StandardEvaluationContext context = new StandardEvaluationContext(cutTicket);
             double discountAmount = expression.getValue(context, Double.class);
             cutTicket.setPrice(cutTicket.getPrice() - discountAmount);
+            cutTicket.setDiscount(discount);
         }
     }
 

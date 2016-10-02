@@ -11,6 +11,7 @@ import java.util.Collection;
  */
 public abstract class DiscountStrategy {
 
+    private String name;
     private String description;
     private String evaluationStrategy;
     private String action;
@@ -43,6 +44,14 @@ public abstract class DiscountStrategy {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public class DiscountContext{

@@ -42,6 +42,7 @@ public class NItemDiscountStrategy extends EachItemDiscountStrategy {
             StandardEvaluationContext context = new StandardEvaluationContext(ticket);
             double discountAmount = expression.getValue(context, Double.class);
             ticket.setPrice(discountAmount);
+            ticket.setDiscount(discount);
         }
     }
 

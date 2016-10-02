@@ -9,8 +9,6 @@ import com.baziuk.spring.events.bean.EventRating;
 import com.baziuk.spring.events.bean.Show;
 import com.baziuk.spring.user.bean.User;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;

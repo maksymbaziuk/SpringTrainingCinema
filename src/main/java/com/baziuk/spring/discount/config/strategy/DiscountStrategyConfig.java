@@ -26,6 +26,7 @@ public class DiscountStrategyConfig {
         EachItemDiscountStrategy discountStrategy = new EachItemDiscountStrategy();
         discountStrategy.setEvaluationStrategy(env.getRequiredProperty("birthday.evaluationStrategy"));
         discountStrategy.setAction(env.getRequiredProperty("birthday.action"));
+        discountStrategy.setName(env.getRequiredProperty("birthday.discount.name"));
         return discountStrategy;
     }
 
@@ -36,6 +37,7 @@ public class DiscountStrategyConfig {
         discountStrategy.setAction(env.getRequiredProperty("eachNTicketDiscount.action"));
         discountStrategy.setEvaluationStrategy(env.getRequiredProperty("eachNTicketDiscount.evaluationStrategy"));
         discountStrategy.setDiscountedTicketNumber(Integer.parseInt(env.getRequiredProperty("eachNTicketDiscount.discountedTicketNumber")));
+        discountStrategy.setName(env.getRequiredProperty("eachNTicketDiscount.discount.name"));
         return discountStrategy;
     }
 }
