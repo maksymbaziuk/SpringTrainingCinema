@@ -1,9 +1,11 @@
 package com.baziuk.spring.event.service;
 
 import com.baziuk.spring.auditorium.bean.Auditorium;
+import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.auditorium.service.AuditoriumService;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
+import com.baziuk.spring.events.config.EventServiceLayerConfig;
 import com.baziuk.spring.events.service.EventService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +25,7 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/27/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:config/test-application-config.xml"})
+@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class, EventServiceLayerConfig.class})
 public class EventServiceTest {
 
     private static final String EXISTEN_EVENT_NAME = "Ghosts";

@@ -2,7 +2,11 @@ package com.baziuk.spring.user.dao;
 
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.user.bean.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +17,15 @@ import java.util.Optional;
  *
  * @author Maks
  */
+@Repository("userDAO")
 public class UserInMemoryDAO implements UserDAO {
 
     private static long currentMaxId = 0;
 
     private List<User> users = new ArrayList<>();
 
+    @Autowired
+    @Qualifier("userJSONDataPopulator")
     private JSONDataPopulator dataPopulator;
 
     @Override
@@ -58,6 +65,7 @@ public class UserInMemoryDAO implements UserDAO {
         return users.stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
     }
 
+    @PostConstruct
     private void initWithData() throws FileNotFoundException{
         List<User> data = dataPopulator.getData(new User[0].getClass());
         data.forEach(cur -> {

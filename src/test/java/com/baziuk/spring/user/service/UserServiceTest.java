@@ -1,7 +1,12 @@
 package com.baziuk.spring.user.service;
 
+import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
+import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
+import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
+import com.baziuk.spring.events.config.EventServiceLayerConfig;
 import com.baziuk.spring.user.bean.User;
 import com.baziuk.spring.user.bean.UserRole;
+import com.baziuk.spring.user.config.UserServiceLayerConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +24,11 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/26/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:config/test-application-config.xml"})
+@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class,
+        EventServiceLayerConfig.class,
+        UserServiceLayerConfig.class,
+        BookingServiceLayerConfig.class,
+        DiscountServiceLayerConfig.class})
 public class UserServiceTest {
 
     private static final String NEW_USER_EMAIL = "failemail@test.test";

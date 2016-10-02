@@ -5,17 +5,14 @@ import com.baziuk.spring.discount.bean.Discount;
 import com.baziuk.spring.discount.strategy.DiscountStrategy;
 import com.baziuk.spring.user.bean.User;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by Maks on 9/25/16.
  */
 public class DiscountCinemaService implements DiscountService {
 
-    private Collection<DiscountStrategy> strategies;
+    private Collection<DiscountStrategy> strategies = new ArrayList<>();
 
     @Override
     public Set<Discount> getDiscounts(User user, Collection<Ticket> tickets) {

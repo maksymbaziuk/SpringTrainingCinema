@@ -1,11 +1,16 @@
 package com.baziuk.spring.booking.service;
 
 
+import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.booking.bean.Ticket;
+import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
+import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
+import com.baziuk.spring.events.config.EventServiceLayerConfig;
 import com.baziuk.spring.events.service.EventService;
 import com.baziuk.spring.user.bean.User;
+import com.baziuk.spring.user.config.UserServiceLayerConfig;
 import com.baziuk.spring.user.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +31,11 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/27/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:config/test-application-config.xml"})
+@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class,
+        EventServiceLayerConfig.class,
+        UserServiceLayerConfig.class,
+        BookingServiceLayerConfig.class,
+        DiscountServiceLayerConfig.class})
 public class BookingServiceTest {
 
     private static final long VALID_USER_ID = 1;

@@ -5,6 +5,7 @@ import com.baziuk.spring.booking.dao.BookingDAO;
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
  */
 public class UserJSONDataPopulator extends JSONDataPopulator {
 
+    @Autowired
     private BookingDAO bookingDAO;
 
     @Override

@@ -3,9 +3,11 @@ package com.baziuk.spring.events.dao;
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
-import org.apache.commons.lang3.NotImplementedException;
-import org.springframework.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -14,12 +16,14 @@ import java.util.stream.Collectors;
 /**
  * Created by Maks on 9/20/16.
  */
+@Repository("eventDAO")
 public class EventInMemoryDAO implements EventDAO {
 
     private static long currentEventMaxId = 1;
     private static long currentShowMaxId = 1;
 
-
+    @Autowired
+    @Qualifier("eventDataPopulator")
     private JSONDataPopulator dataPopulator;
 
     private TreeSet<Event> events = new TreeSet<>();
@@ -90,6 +94,7 @@ public class EventInMemoryDAO implements EventDAO {
         return idToShowCache.get(id);
     }
 
+    @PostConstruct
     private void initWithData() throws FileNotFoundException {
         List<Event> data = dataPopulator.getData(new Event[0].getClass());
         data.forEach(cur -> {

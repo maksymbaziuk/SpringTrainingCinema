@@ -6,12 +6,14 @@ import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.events.bean.Event;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Maks on 9/25/16.
  */
 public class EventJSONDataPopulator extends JSONDataPopulator<Event> {
 
+    @Autowired
     private AuditoriumDAO auditoriumDAO;
 
     @Override

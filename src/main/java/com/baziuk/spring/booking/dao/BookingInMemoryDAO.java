@@ -3,7 +3,11 @@ package com.baziuk.spring.booking.dao;
 import com.baziuk.spring.booking.bean.Ticket;
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.events.bean.Event;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,10 +18,13 @@ import java.util.stream.Collectors;
 /**
  * Created by Maks on 9/25/16.
  */
+@Repository("bookingDAO")
 public class BookingInMemoryDAO implements BookingDAO {
 
     private static long curMaxTicketId = 1;
 
+    @Autowired
+    @Qualifier("ticketJSONDataPopulator")
     private JSONDataPopulator dataPopulator;
 
     private List<Ticket> tickets;
@@ -57,6 +64,7 @@ public class BookingInMemoryDAO implements BookingDAO {
                 && ticket.getShow().getEnd().isBefore(to)).collect(Collectors.toList());
     }
 
+    @PostConstruct
     public void initWithData() throws FileNotFoundException {
         Collection<Ticket> dataTickets = dataPopulator.getData(new Ticket[0].getClass());
         dataTickets.forEach(ticket -> {

@@ -3,6 +3,8 @@ package com.baziuk.spring.auditorium.service;
 import com.baziuk.spring.auditorium.bean.Auditorium;
 import com.baziuk.spring.auditorium.dao.AuditoriumDAO;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -10,8 +12,10 @@ import java.util.Optional;
 /**
  * Created by Maks on 9/20/16.
  */
+@Service("auditoriumService")
 public class AuditoriumCinemaService implements AuditoriumService {
 
+    @Autowired
     private AuditoriumDAO auditoriumDAO;
 
     @Override

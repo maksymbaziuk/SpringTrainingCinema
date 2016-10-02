@@ -21,7 +21,7 @@ public class NItemDiscountStrategy extends EachItemDiscountStrategy {
 
     @Override
     public boolean isDiscountable(User user, Collection<Ticket> tickets) {
-        DiscountContext discountContext = new DiscountContext(user, new ArrayList<>());
+        DiscountContext discountContext = new DiscountContext(user, new ArrayList<>(user.getBoughtTickets()));
         for (Ticket curTicket : tickets) {
             discountContext.getTickets().add(curTicket);
             ExpressionParser expressionParser = new SpelExpressionParser();

@@ -4,9 +4,10 @@ import com.baziuk.spring.user.bean.User;
 import com.baziuk.spring.user.bean.UserRole;
 import com.baziuk.spring.user.dao.UserDAO;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,8 +15,10 @@ import java.util.Optional;
  *
  * @author Maks
  */
+@Service("userService")
 public class CinemaUserService implements UserService {
 
+    @Autowired
     private UserDAO userDAO;
 
     @Override

@@ -5,6 +5,8 @@ import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
 import com.baziuk.spring.events.dao.EventDAO;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -15,10 +17,13 @@ import java.util.Optional;
 /**
  * Created by Maks on 9/25/16.
  */
+@Service("eventService")
 public class EventCinemaService implements EventService {
 
+    @Autowired
     private EventDAO eventDAO;
 
+    @Autowired
     private AuditoriumService auditoriumService;
 
     @Override
