@@ -1,4 +1,4 @@
-package com.baziuk.spring.booking.data;
+package com.baziuk.spring.booking.data.inmemory;
 
 import com.baziuk.spring.booking.bean.Ticket;
 import com.baziuk.spring.data.JSONDataPopulator;

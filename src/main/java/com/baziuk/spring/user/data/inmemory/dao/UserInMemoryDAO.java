@@ -1,7 +1,8 @@
-package com.baziuk.spring.user.dao;
+package com.baziuk.spring.user.data.inmemory.dao;
 
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.user.bean.User;
+import com.baziuk.spring.user.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;

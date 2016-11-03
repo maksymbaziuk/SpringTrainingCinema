@@ -1,6 +1,6 @@
 package com.baziuk.spring.booking.config.inmemory;
 
-import com.baziuk.spring.booking.data.TicketJSONDataPopulator;
+import com.baziuk.spring.booking.data.inmemory.TicketJSONDataPopulator;
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.events.dao.EventDAO;
 import org.springframework.beans.factory.annotation.Qualifier;

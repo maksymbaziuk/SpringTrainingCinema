@@ -1,6 +1,6 @@
 package com.baziuk.spring.auditorium.config;
 
-import com.baziuk.spring.auditorium.config.inmemory.AuditoriumDataLayerConfig;
+import com.baziuk.spring.auditorium.config.db.AuditoriumDBConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan("com.baziuk.spring.auditorium.service")
-@Import({AuditoriumDataLayerConfig.class})
+@Import({AuditoriumDBConfig.class})
 public class AuditoriumServiceLayerConfig {
 }

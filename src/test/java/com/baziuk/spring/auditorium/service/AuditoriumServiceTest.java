@@ -2,9 +2,11 @@ package com.baziuk.spring.auditorium.service;
 
 import com.baziuk.spring.auditorium.bean.Auditorium;
 import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
+import com.baziuk.spring.data.H2DBConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,7 +19,8 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/26/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class})
+@ContextConfiguration(classes = {H2DBConfig.class, AuditoriumServiceLayerConfig.class})
+@DirtiesContext
 public class AuditoriumServiceTest {
 
     private static final String EXISTEN_AUDITORIUM_NAME = "red";

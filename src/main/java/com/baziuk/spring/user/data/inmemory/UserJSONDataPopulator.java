@@ -1,4 +1,4 @@
-package com.baziuk.spring.user.data;
+package com.baziuk.spring.user.data.inmemory;
 
 import com.baziuk.spring.booking.bean.Ticket;
 import com.baziuk.spring.booking.dao.BookingDAO;

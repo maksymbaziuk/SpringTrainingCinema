@@ -1,4 +1,4 @@
-package com.baziuk.spring.events.data;
+package com.baziuk.spring.events.data.inmemory;
 
 import com.baziuk.spring.auditorium.bean.Auditorium;
 import com.baziuk.spring.auditorium.dao.AuditoriumDAO;

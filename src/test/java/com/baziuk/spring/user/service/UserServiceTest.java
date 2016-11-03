@@ -2,6 +2,7 @@ package com.baziuk.spring.user.service;
 
 import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
+import com.baziuk.spring.data.H2DBConfig;
 import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
 import com.baziuk.spring.events.config.EventServiceLayerConfig;
 import com.baziuk.spring.user.bean.User;
@@ -24,11 +25,14 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/26/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class,
+@ContextConfiguration(classes = {
+        H2DBConfig.class,
+        AuditoriumServiceLayerConfig.class,
         EventServiceLayerConfig.class,
         UserServiceLayerConfig.class,
         BookingServiceLayerConfig.class,
         DiscountServiceLayerConfig.class})
+@DirtiesContext
 public class UserServiceTest {
 
     private static final String NEW_USER_EMAIL = "failemail@test.test";
@@ -162,7 +166,6 @@ public class UserServiceTest {
     @Test
     @DirtiesContext
     public void saveOldUser(){
-        // If new user - save should create a user
         User user = userService.getUserByEmail(EXISTEN_USER_EMAIL).get();
         user.setBirthday(LocalDate.now());
         User result = userService.saveUser(user);

@@ -1,6 +1,7 @@
-package com.baziuk.spring.auditorium.dao;
+package com.baziuk.spring.auditorium.data.inmemory.dao;
 
 import com.baziuk.spring.auditorium.bean.Auditorium;
+import com.baziuk.spring.auditorium.dao.AuditoriumDAO;
 import com.baziuk.spring.data.JSONDataPopulator;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -49,7 +49,7 @@ public class CinemaUserService implements UserService {
 
     @Override
     public boolean removeUser(User user) {
-        return userDAO.remove(user);
+        return user != null ? userDAO.remove(user) : true;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CinemaUserService implements UserService {
     @Override
     public User saveUser(User user) {
         if (user.getId() == 0){
-            return userDAO.create(user);
+            return registerUser(user);
         }
         return userDAO.update(user);
     }

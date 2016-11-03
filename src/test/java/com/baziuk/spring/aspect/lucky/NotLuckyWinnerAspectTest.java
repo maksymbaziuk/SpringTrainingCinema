@@ -4,6 +4,7 @@ import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.booking.bean.Ticket;
 import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
 import com.baziuk.spring.booking.service.BookingService;
+import com.baziuk.spring.data.H2DBConfig;
 import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
@@ -60,7 +61,8 @@ public class NotLuckyWinnerAspectTest {
 
 @Configuration
 @EnableAspectJAutoProxy
-@Import({AuditoriumServiceLayerConfig.class,
+@Import({H2DBConfig.class,
+        AuditoriumServiceLayerConfig.class,
         EventServiceLayerConfig.class,
         UserServiceLayerConfig.class,
         BookingServiceLayerConfig.class,

@@ -1,8 +1,9 @@
-package com.baziuk.spring.events.dao;
+package com.baziuk.spring.events.data.inmemory.dao;
 
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
+import com.baziuk.spring.events.dao.EventDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;

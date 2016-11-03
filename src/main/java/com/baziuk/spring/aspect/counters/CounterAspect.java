@@ -27,7 +27,7 @@ public class CounterAspect {
     public void accessEventByName(JoinPoint joinPoint){
         String eventName = (String) joinPoint.getArgs()[0];
         counterDAO.increaseAccessEventByName(eventName);
-    }
+     }
 
     @Before("execution(* com.baziuk.spring.booking.service.BookingService.getTicketsPrice(..))")
     public void priceForEventQueried(JoinPoint joinPoint){

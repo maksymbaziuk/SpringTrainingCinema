@@ -5,6 +5,7 @@ import com.baziuk.spring.aspect.dao.CounterDAO;
 import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
 import com.baziuk.spring.booking.service.BookingService;
+import com.baziuk.spring.data.H2DBConfig;
 import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
@@ -21,6 +22,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -30,6 +32,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {
+        H2DBConfig.class,
         AspectCountersConfig.class,
         AuditoriumServiceLayerConfig.class,
         EventServiceLayerConfig.class,
@@ -57,6 +60,8 @@ public class CounterAspectsTest {
         user = userService.getUserById(1).get();
         event = eventService.getEventById(1).get();
         show = event.getSchedule().first();
+        show.setStart(LocalDateTime.now().plusDays(1));
+        show.setEnd(LocalDateTime.now().plusDays(2));
     }
 
     @Test
@@ -78,7 +83,8 @@ public class CounterAspectsTest {
         bookingService.bookTickets(event, show, user, 20);
         bookingTicketsCounter = counterDAO.getBookEventTicketsCounter();
         assertFalse(bookingTicketsCounter.isEmpty());
-        assertEquals(1, bookingTicketsCounter.get(event).intValue());
+        assertEquals(1, bookingTicketsCounter.values().stream().findFirst().get().intValue());
+        assertEquals(event.getId(), bookingTicketsCounter.keySet().stream().findFirst().get().getId());
     }
 
     @Test
@@ -89,7 +95,8 @@ public class CounterAspectsTest {
         bookingService.getTicketsPrice(event, show, user, 20);
         bookingTicketsCounter = counterDAO.getPriceForEventCounter();
         assertFalse(bookingTicketsCounter.isEmpty());
-        assertEquals(1, bookingTicketsCounter.get(event).intValue());
+        assertEquals(1, bookingTicketsCounter.values().stream().findFirst().get().intValue());
+        assertEquals(event.getId(), bookingTicketsCounter.keySet().stream().findFirst().get().getId());
     }
 
     @Test

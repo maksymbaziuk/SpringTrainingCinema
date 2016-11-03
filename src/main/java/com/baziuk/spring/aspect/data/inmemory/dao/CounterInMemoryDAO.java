@@ -1,5 +1,6 @@
-package com.baziuk.spring.aspect.dao;
+package com.baziuk.spring.aspect.data.inmemory.dao;
 
+import com.baziuk.spring.aspect.dao.CounterDAO;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.user.bean.User;
 import org.springframework.stereotype.Repository;

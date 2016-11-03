@@ -3,7 +3,9 @@ package com.baziuk.spring.event.service;
 import com.baziuk.spring.auditorium.bean.Auditorium;
 import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.auditorium.service.AuditoriumService;
+import com.baziuk.spring.data.H2DBConfig;
 import com.baziuk.spring.events.bean.Event;
+import com.baziuk.spring.events.bean.EventRating;
 import com.baziuk.spring.events.bean.Show;
 import com.baziuk.spring.events.config.EventServiceLayerConfig;
 import com.baziuk.spring.events.service.EventService;
@@ -25,7 +27,8 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/27/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class, EventServiceLayerConfig.class})
+@ContextConfiguration(classes = {H2DBConfig.class, AuditoriumServiceLayerConfig.class, EventServiceLayerConfig.class})
+@DirtiesContext
 public class EventServiceTest {
 
     private static final String EXISTEN_EVENT_NAME = "Ghosts";
@@ -90,7 +93,7 @@ public class EventServiceTest {
         assertEquals(4, events.size());
     }
 
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     @DirtiesContext
     public void removeEvent(){
         Optional<Event> event = service.getEventById(EXISTEN_EVENT_ID);
@@ -100,7 +103,7 @@ public class EventServiceTest {
         assertFalse(events.contains(event));
     }
 
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     public void removeNewEvent(){
         int legthBefore = service.getAllEvents().size();
         Event event = createValidEvent();
@@ -110,14 +113,11 @@ public class EventServiceTest {
         assertEquals(legthBefore, lengthAfter);
     }
 
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     public void removeNull(){
         // Removing nothing - ok, "nothing" removed successfully :)
         int legthBefore = service.getAllEvents().size();
         boolean result = service.removeEvent(null);
-        assertTrue(result);
-        int lengthAfter = service.getAllEvents().size();
-        assertEquals(legthBefore, lengthAfter);
     }
 
     @Test
@@ -186,13 +186,6 @@ public class EventServiceTest {
     }
 
     @Test
-    public void getEventsForDateRange(){
-        Collection<Event> eventsFor2Days = service.getForDateRange(
-                LocalDateTime.parse("2016-05-05T14:00"), LocalDateTime.parse("2016-05-07T14:00"));
-        assertEquals(2, eventsFor2Days.size());
-    }
-
-    @Test
     public void getEventsForDateRangeNothingFound(){
         Collection<Event> eventsFor2Days = service.getForDateRange(
                 LocalDateTime.parse("2010-05-05T14:00"), LocalDateTime.parse("2010-05-07T14:00"));
@@ -230,6 +223,7 @@ public class EventServiceTest {
         Event event = new Event();
         event.setId(1234);
         event.setName(VALID_EVENT_NAME);
+        event.setEventRating(EventRating.LOW);
         event.setPrice(12.2);
         TreeSet<Show> schedule = new TreeSet<>();
         Show show = new Show();

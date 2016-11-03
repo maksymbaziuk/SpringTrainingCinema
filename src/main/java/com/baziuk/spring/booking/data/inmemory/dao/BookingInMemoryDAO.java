@@ -1,6 +1,7 @@
-package com.baziuk.spring.booking.dao;
+package com.baziuk.spring.booking.data.inmemory.dao;
 
 import com.baziuk.spring.booking.bean.Ticket;
+import com.baziuk.spring.booking.dao.BookingDAO;
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.baziuk.spring.events.bean.Event;
 import org.springframework.beans.factory.annotation.Autowired;

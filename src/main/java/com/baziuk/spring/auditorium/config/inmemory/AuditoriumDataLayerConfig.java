@@ -1,7 +1,7 @@
 package com.baziuk.spring.auditorium.config.inmemory;
 
 import com.baziuk.spring.auditorium.dao.AuditoriumDAO;
-import com.baziuk.spring.auditorium.dao.AuditoriumInMemoryDAO;
+import com.baziuk.spring.auditorium.data.inmemory.dao.AuditoriumInMemoryDAO;
 import com.baziuk.spring.data.JSONDataPopulator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

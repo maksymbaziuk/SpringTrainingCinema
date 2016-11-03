@@ -1,5 +1,6 @@
 package com.baziuk.spring.user.config;
 
+import com.baziuk.spring.user.config.db.UserH2DBConfig;
 import com.baziuk.spring.user.config.inmemory.UserDataLayerConfig;
 import com.baziuk.spring.user.service.CinemaUserService;
 import com.baziuk.spring.user.service.UserService;
@@ -13,6 +14,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan("com.baziuk.spring.user.service")
-@Import(UserDataLayerConfig.class)
+@Import(UserH2DBConfig.class)
 public class UserServiceLayerConfig {
 }

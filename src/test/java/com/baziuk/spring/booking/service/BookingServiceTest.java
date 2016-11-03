@@ -4,6 +4,7 @@ package com.baziuk.spring.booking.service;
 import com.baziuk.spring.auditorium.config.AuditoriumServiceLayerConfig;
 import com.baziuk.spring.booking.bean.Ticket;
 import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
+import com.baziuk.spring.data.H2DBConfig;
 import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
 import com.baziuk.spring.events.bean.Event;
 import com.baziuk.spring.events.bean.Show;
@@ -22,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -31,11 +33,14 @@ import static org.junit.Assert.*;
  * Created by Maks on 9/27/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AuditoriumServiceLayerConfig.class,
+@ContextConfiguration(classes = {
+        H2DBConfig.class,
+        AuditoriumServiceLayerConfig.class,
         EventServiceLayerConfig.class,
         UserServiceLayerConfig.class,
         BookingServiceLayerConfig.class,
         DiscountServiceLayerConfig.class})
+@DirtiesContext
 public class BookingServiceTest {
 
     private static final long VALID_USER_ID = 1;
@@ -180,6 +185,8 @@ public class BookingServiceTest {
 
     @Test
     public void availableForPurchase(){
+        show.setStart(LocalDateTime.now().plusDays(2));
+        show.setEnd(LocalDateTime.now().plusDays(5));
         boolean available = service.isAvailable(event, show, 15);
         assertTrue(available);
     }
@@ -187,6 +194,8 @@ public class BookingServiceTest {
     @Test
     @DirtiesContext
     public void bookOneTicket(){
+        show.setStart(LocalDateTime.now().plusDays(2));
+        show.setEnd(LocalDateTime.now().plusDays(5));
         Collection<Ticket> tickets = service.bookTickets(event, show, user, 15);
         assertEquals(1, tickets.size());
     }
@@ -201,10 +210,11 @@ public class BookingServiceTest {
     @Test
     @DirtiesContext
     public void bookOneTicketCheckUserTickets(){
+        show.setStart(LocalDateTime.now().plusDays(2));
+        show.setEnd(LocalDateTime.now().plusDays(5));
         Collection<Ticket> tickets = service.bookTickets(event, show, user, 15);
         assertEquals(1, tickets.size());
         User checkUser = userService.getUserById(user.getId()).get();
-        assertEquals(2, checkUser.getBoughtTickets().size());
-        assertTrue(checkUser.getBoughtTickets().contains(tickets.iterator().next()));
+        assertEquals(1, checkUser.getBoughtTickets().size());
     }
 }
