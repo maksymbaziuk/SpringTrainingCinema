@@ -70,6 +70,11 @@ public class EventCinemaService implements EventService {
     }
 
     @Override
+    public Optional<Show> getShowById(long id) {
+        return Optional.ofNullable(eventDAO.getShowById(id));
+    }
+
+    @Override
     public Optional<Event> getEventByName(String name) {
         return Optional.ofNullable(eventDAO.getByName(name));
     }

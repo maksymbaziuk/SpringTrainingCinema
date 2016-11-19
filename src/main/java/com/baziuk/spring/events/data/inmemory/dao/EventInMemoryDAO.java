@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -96,7 +97,7 @@ public class EventInMemoryDAO implements EventDAO {
     }
 
     @PostConstruct
-    private void initWithData() throws FileNotFoundException {
+    private void initWithData() throws IOException {
         List<Event> data = dataPopulator.getData(new Event[0].getClass());
         data.forEach(cur -> {
             if (currentEventMaxId <= cur.getId()){

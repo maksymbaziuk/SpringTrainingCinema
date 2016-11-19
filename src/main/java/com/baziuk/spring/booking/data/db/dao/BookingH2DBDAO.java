@@ -79,11 +79,10 @@ public class BookingH2DBDAO implements BookingDAO {
 
     @Override
     public Collection<Ticket> getTicketsForEvent(Event event, LocalDateTime from, LocalDateTime to) {
-        Collection<Event> eventsForDates = eventDAO.getForDateRange(from, to);
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("ids", eventsForDates.stream().map(Event::getId).collect(Collectors.toList()));
-        Collection<Ticket> tickets = template.query("SELECT * FROM TICKET WHERE id IN (:ids)", parameters, TICKET_ROW_MAPPER);
+        parameters.addValue("eventId", event.getId());
+        Collection<Ticket> tickets = template.query("SELECT * FROM TICKET WHERE event_id IN (:eventId)", parameters, TICKET_ROW_MAPPER);
         return tickets;
     }
 

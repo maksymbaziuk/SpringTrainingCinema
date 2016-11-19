@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,7 @@ public class AuditoriumInMemoryDAO implements AuditoriumDAO {
         return auditoriums.stream().filter(auditorium -> auditorium.getName().equals(name)).findFirst().orElse(null);
     }
 
-    private void initWithData() throws FileNotFoundException{
+    private void initWithData() throws IOException {
         List<Auditorium> data = dataPopulator.getData(new Auditorium[0].getClass());
         data.forEach(cur -> {
             auditoriums.add(cur);

@@ -17,7 +17,7 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @ComponentScan("com.baziuk.spring.booking.service")
-@PropertySource("config/booking-config.properties")
+@PropertySource("classpath:config/booking-config.properties")
 @Import(BookingH2DBConfig.class)
 public class BookingServiceLayerConfig {
 

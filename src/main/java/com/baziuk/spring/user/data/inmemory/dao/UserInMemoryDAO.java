@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +68,7 @@ public class UserInMemoryDAO implements UserDAO {
     }
 
     @PostConstruct
-    private void initWithData() throws FileNotFoundException{
+    private void initWithData() throws IOException {
         List<User> data = dataPopulator.getData(new User[0].getClass());
         data.forEach(cur -> {
             if (currentMaxId <= cur.getId()){

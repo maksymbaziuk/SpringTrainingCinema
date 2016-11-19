@@ -12,6 +12,7 @@ public class User {
 
     private long id;
     private String email;
+    private String passwordHash;
     private LocalDate birthday;
     private UserRole userRole;
     private List<Ticket> boughtTickets;
@@ -65,5 +66,13 @@ public class User {
 
     public void setBoughtTickets(List<Ticket> boughtTickets) {
         this.boughtTickets = boughtTickets;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 }

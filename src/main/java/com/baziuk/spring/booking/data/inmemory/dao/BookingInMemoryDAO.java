@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,7 +51,7 @@ public class BookingInMemoryDAO implements BookingDAO {
 
     @Override
     public Ticket get(long id) {
-        return tickets.stream().filter(ticket -> ticket.getId() == id).findFirst().get();
+        return tickets.stream().filter(ticket -> ticket.getId() == id).findFirst().orElse(null);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class BookingInMemoryDAO implements BookingDAO {
     }
 
     @PostConstruct
-    public void initWithData() throws FileNotFoundException {
+    public void initWithData() throws IOException {
         Collection<Ticket> dataTickets = dataPopulator.getData(new Ticket[0].getClass());
         dataTickets.forEach(ticket -> {
             if (curMaxTicketId < ticket.getId()){

@@ -70,6 +70,11 @@ public class BookingCinemaService implements BookingService {
         return !bookedSits.stream().anyMatch(ticket -> requestedSeats.contains(ticket.getSitNumber()));
     }
 
+    @Override
+    public Ticket getTicketById(long ticketId) {
+        return bookingDAO.get(ticketId);
+    }
+
     private void checkForDiscount(User user, Collection<Ticket> result) {
         Optional<Discount> discount = discountService.getBestDiscount(user, result);
         if (discount.isPresent() && discount.get().getDiscountAmount() != 0)

@@ -15,5 +15,6 @@ public interface BookingService {
     double getTicketsPrice(Event event, Show show, User user, int... seats);
     Collection<Ticket> bookTickets(Event event, Show show, User user, int... seats);
     boolean isAvailable(Event event, Show show, int... seats);
+    Ticket getTicketById(long ticketId);
 
 }

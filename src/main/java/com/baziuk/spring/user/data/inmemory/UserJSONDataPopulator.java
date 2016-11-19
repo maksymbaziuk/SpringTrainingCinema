@@ -2,6 +2,7 @@ package com.baziuk.spring.user.data.inmemory;
 
 import com.baziuk.spring.booking.bean.Ticket;
 import com.baziuk.spring.booking.dao.BookingDAO;
+import com.baziuk.spring.data.InputStreamJSONDataPopulator;
 import com.baziuk.spring.data.JSONDataPopulator;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 /**
  * Created by Maks on 9/25/16.
  */
-public class UserJSONDataPopulator extends JSONDataPopulator {
+public class UserJSONDataPopulator extends InputStreamJSONDataPopulator {
 
     @Autowired
     private BookingDAO bookingDAO;

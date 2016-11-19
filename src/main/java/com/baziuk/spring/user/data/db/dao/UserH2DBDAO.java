@@ -40,6 +40,7 @@ public class UserH2DBDAO implements UserDAO {
         Map<String, Object> params = new HashMap<>();
         params.put("birthday", fromDateTime(item.getBirthday()));
         params.put("email", item.getEmail());
+        params.put("password_hash", item.getPasswordHash());
         params.put("user_role", item.getUserRole().toString());
         Number newUserId = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(params));
         item.setId(newUserId.longValue());
@@ -48,8 +49,8 @@ public class UserH2DBDAO implements UserDAO {
 
     @Override
     public User update(User item) {
-        jdbcTemplate.update("update USERS set email=?, birthday=?, user_role=? where id=?",
-                new Object[]{item.getEmail(), fromDateTime(item.getBirthday()), item.getUserRole().toString(), item.getId()});
+        jdbcTemplate.update("update USERS set email=?, birthday=?, user_role=?, password_hash=? where id=?",
+                new Object[]{item.getEmail(), fromDateTime(item.getBirthday()), item.getUserRole().toString(), item.getPasswordHash(), item.getId()});
         clearUserTicketRelations(item);
         createUserTicketRelations(item);
         return item;
@@ -101,6 +102,7 @@ public class UserH2DBDAO implements UserDAO {
             user.setId(resultSet.getLong("id"));
             user.setBirthday(toDateTime(resultSet.getLong("birthday")));
             user.setEmail(resultSet.getString("email"));
+            user.setPasswordHash(resultSet.getString("password_hash"));
             user.setUserRole(UserRole.valueOf(resultSet.getString("user_role")));
             List<Integer> ticketIds = jdbcTemplate.query("SELECT ticket_id FROM USER_TICKETS WHERE user_id = ?",
                     new Object[]{user.getId()},

@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +16,14 @@ public class JSONDataPopulator<T> {
 
     private File dataFile;
 
-    public List<T> getData(Class<T[]> clazz) throws FileNotFoundException{
+    public List<T> getData(Class<T[]> clazz) throws IOException{
         Gson gson = getGsonInstance();
-        T[] data = gson.fromJson(new BufferedReader(new FileReader(dataFile)), clazz);
+        T[] data = gson.fromJson(getReader(), clazz);
         return Arrays.asList(data);
+    }
+
+    protected Reader getReader() throws IOException {
+        return new BufferedReader(new FileReader(dataFile));
     }
 
     protected Gson getGsonInstance(){

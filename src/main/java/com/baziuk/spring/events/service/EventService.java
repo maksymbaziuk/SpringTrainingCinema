@@ -1,6 +1,7 @@
 package com.baziuk.spring.events.service;
 
 import com.baziuk.spring.events.bean.Event;
+import com.baziuk.spring.events.bean.Show;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -17,6 +18,7 @@ public interface EventService {
     Event createEvent(Event item);
     boolean removeEvent(Event item);
     Optional<Event> getEventById(long id);
+    Optional<Show> getShowById(long id);
     Optional<Event> getEventByName(String name);
     Collection<Event> getAllEvents();
 
