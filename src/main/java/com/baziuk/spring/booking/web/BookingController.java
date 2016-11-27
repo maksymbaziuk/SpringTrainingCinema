@@ -56,7 +56,7 @@ public class BookingController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    @RequestMapping(value = "/buy", method = RequestMethod.GET)
     public String bookTickets(@ModelAttribute UserBookingRequest bookingRequest){
         log.info("Attempting to book tickets: " + bookingRequest.toString());
         User user = bookingRequest.getUser();

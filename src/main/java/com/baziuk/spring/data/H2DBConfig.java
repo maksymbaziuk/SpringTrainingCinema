@@ -10,11 +10,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
 
@@ -22,6 +26,7 @@ import javax.sql.DataSource;
  * Created by Maks on 10/10/16.
  */
 @Configuration
+@EnableTransactionManagement
 public class H2DBConfig {
 
     @Value("classpath:config/db/clean.sql")
@@ -36,6 +41,18 @@ public class H2DBConfig {
     @Bean
     public DataSource dataSource() {
         return createH2DataSource();
+    }
+
+    @Bean
+    public DataSourceTransactionManager txManager(){
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource());
+        return transactionManager;
+    }
+
+    @Bean
+    public TransactionManagementConfigurer transactionManagementConfigurer(){
+        return () -> txManager();
     }
 
     private DataSource createH2DataSource() {

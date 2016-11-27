@@ -9,6 +9,12 @@ import com.baziuk.spring.events.bean.EventRating;
 import com.baziuk.spring.events.bean.Show;
 import com.baziuk.spring.user.bean.User;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,11 +26,14 @@ public class BookingCinemaService implements BookingService {
 
     private BookingDAO bookingDAO;
 
+    private AbstractPlatformTransactionManager txManager;
+
     private DiscountService discountService;
     private double vipMultiplier;
     private double rankMultiplier;
 
     @Override
+    @Transactional(readOnly = true)
     public double getTicketsPrice(Event event, Show show, User user, int... seats) {
         final Collection<Ticket> result = new ArrayList<>();
         List<Integer> requestedSeats = Arrays.asList(ArrayUtils.toObject(seats));
@@ -40,22 +49,36 @@ public class BookingCinemaService implements BookingService {
     @Override
     public Collection<Ticket> bookTickets(Event event, Show show, User user, int... seats) {
         if (isAvailable(event, show, seats)){
+            DefaultTransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+            transactionDefinition.setName("bookTickets" + event.getId() + show.getId());
+            transactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+            transactionDefinition.setIsolationLevel(TransactionDefinition.ISOLATION_SERIALIZABLE);
+
+            TransactionStatus transactionStatus = txManager.getTransaction(transactionDefinition);
             final Collection<Ticket> result = new ArrayList<>();
-            List<Integer> requestedSeats = Arrays.asList(ArrayUtils.toObject(seats));
-            requestedSeats.stream().forEach(sitNumber -> {
-                Ticket ticket = new Ticket(event, show, sitNumber);
-                ticket = bookingDAO.create(ticket);
-                ticket.setPrice(getRawPrice(event, show, sitNumber));
-                result.add(ticket);
-            });
-            checkForDiscount(user, result);
-            user.getBoughtTickets().addAll(result);
+            try{
+                List<Integer> requestedSeats = Arrays.asList(ArrayUtils.toObject(seats));
+                requestedSeats.stream().forEach(sitNumber -> {
+                    Ticket ticket = new Ticket(event, show, sitNumber);
+                    ticket = bookingDAO.create(ticket);
+                    ticket.setPrice(getRawPrice(event, show, sitNumber));
+                    result.add(ticket);
+                });
+                checkForDiscount(user, result);
+                user.getBoughtTickets().addAll(result);
+            } catch (Exception e){
+                txManager.rollback(transactionStatus);
+                throw new RuntimeException(e);
+            }
+            txManager.commit(transactionStatus);
+
             return result;
         }
         return Collections.emptyList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isAvailable(Event event, Show show, int... seats) {
         if (!event.getSchedule().contains(show)){
             throw new IllegalArgumentException("Show is not related to Event!!");
@@ -71,6 +94,7 @@ public class BookingCinemaService implements BookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Ticket getTicketById(long ticketId) {
         return bookingDAO.get(ticketId);
     }
@@ -122,5 +146,13 @@ public class BookingCinemaService implements BookingService {
 
     public void setDiscountService(DiscountService discountService) {
         this.discountService = discountService;
+    }
+
+    public AbstractPlatformTransactionManager getTxManager() {
+        return txManager;
+    }
+
+    public void setTxManager(AbstractPlatformTransactionManager txManager) {
+        this.txManager = txManager;
     }
 }

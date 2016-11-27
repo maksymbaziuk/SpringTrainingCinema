@@ -41,6 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .access("hasAuthority('ADMIN')")
                 .and()
                 .authorizeRequests()
+                .antMatchers("/purchase/ticket/price")
+                .permitAll()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/purchase/ticket/{ticketId}")
                 .access("@bookingInfoAccessService.checkIfTicketAccessable(authentication,#ticketId) or hasAuthority('BOOKING_MANAGER')");
     }

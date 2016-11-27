@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +36,7 @@ public class BookingH2DBDAO implements BookingDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Ticket create(Ticket item) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("TICKET").usingGeneratedKeyColumns("id");
@@ -48,6 +51,7 @@ public class BookingH2DBDAO implements BookingDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Ticket update(Ticket item) {
         jdbcTemplate.update("update TICKET set price=?, sit_number=?, event_id=?, show_id=? where id=?",
                 new Object[]{item.getPrice(), item.getSitNumber(), item.getEvent().getId(), item.getShow().getId(), item.getId()});
@@ -55,12 +59,14 @@ public class BookingH2DBDAO implements BookingDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean remove(Ticket item) {
         int rowsAffected = jdbcTemplate.update("delete from TICKET where id=?", new Object[]{item.getId()});
         return rowsAffected > 0;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Ticket get(long id) {
         Ticket ticket;
         try {
@@ -72,12 +78,14 @@ public class BookingH2DBDAO implements BookingDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Ticket> getAll() {
         List<Ticket> tickets = jdbcTemplate.query("select * from TICKET", TICKET_ROW_MAPPER);
         return tickets;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Ticket> getTicketsForEvent(Event event, LocalDateTime from, LocalDateTime to) {
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
         MapSqlParameterSource parameters = new MapSqlParameterSource();

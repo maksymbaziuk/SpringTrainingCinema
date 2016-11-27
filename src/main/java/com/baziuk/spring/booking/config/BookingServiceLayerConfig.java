@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 /**
  * Created by Maks on 10/2/16.
@@ -24,11 +25,15 @@ public class BookingServiceLayerConfig {
     @Autowired
     public Environment env;
 
+    @Autowired
+    public AbstractPlatformTransactionManager txManager;
+
     @Bean
     public BookingService bookingService(DiscountService discountService, BookingDAO bookingDAO){
         BookingCinemaService cinemaService = new BookingCinemaService();
         cinemaService.setDiscountService(discountService);
         cinemaService.setBookingDAO(bookingDAO);
+        cinemaService.setTxManager(txManager);
         cinemaService.setVipMultiplier(Double.parseDouble(env.getRequiredProperty("vipMultiplier")));
         cinemaService.setRankMultiplier(Double.parseDouble(env.getRequiredProperty("rankMultiplier")));
         return cinemaService;

@@ -5,6 +5,7 @@ import com.baziuk.spring.booking.config.BookingServiceLayerConfig;
 import com.baziuk.spring.data.H2DBConfig;
 import com.baziuk.spring.discount.config.DiscountServiceLayerConfig;
 import com.baziuk.spring.events.config.EventServiceLayerConfig;
+import com.baziuk.spring.payment.config.PaymentConfig;
 import com.baziuk.spring.user.config.UserServiceLayerConfig;
 import freemarker.template.TemplateException;
 import freemarker.template.utility.XmlEscape;
@@ -38,6 +39,7 @@ import java.util.Map;
 @EnableWebMvc
 @ComponentScan({"com.baziuk.spring.*.web"})
 @Import({H2DBConfig.class,
+        PaymentConfig.class,
         AuditoriumServiceLayerConfig.class,
         EventServiceLayerConfig.class,
         UserServiceLayerConfig.class,
