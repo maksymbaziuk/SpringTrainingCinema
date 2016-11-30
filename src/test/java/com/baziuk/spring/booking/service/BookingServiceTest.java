@@ -55,11 +55,9 @@ public class BookingServiceTest {
     @Autowired
     private EventService eventService;
 
-    @Value("#{bookingService.vipMultiplier}")
-    private double vipSitMultiplier;
+    private double vipSitMultiplier = 2;
 
-    @Value("#{bookingService.rankMultiplier}")
-    private double rankSitMultiplier;
+    private double rankSitMultiplier = 1.2;
 
     private Event event;
     private Show show;
